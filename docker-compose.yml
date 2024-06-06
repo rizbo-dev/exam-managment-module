@@ -1,0 +1,50 @@
+version: '3'
+
+networks:
+  student-exam-management-network:
+
+services:
+
+  # nginx
+  student-nginx-service:
+    image: nginx:stable-alpine
+    container_name: student-nginx-container
+    ports:
+      - "8080:80"
+    volumes:
+      - ./student-service/app:/var/www/project
+      - ./student-service/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - student-php83-service
+      - mysql8-service
+    networks:
+      - student-exam-management-network
+
+  # php
+  student-php83-service:
+    build:
+      context: .
+      dockerfile: ./student-service/php/Dockerfile
+    container_name: student-php83-container
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./student-service/app:/var/www/project
+    networks:
+      - student-exam-management-network
+
+  # mysql
+  mysql8-service:
+    image: mysql:8
+    container_name: mysql8-container
+    ports:
+      - "5306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always # always restart unless stopped manually
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_PASSWORD: secret
+    networks:
+      - student-exam-management-network

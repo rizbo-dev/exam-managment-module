@@ -95,3 +95,29 @@ services:
       - ./class-service/app:/var/www/project
     networks:
       - student-exam-management-network
+
+  # Transaction service
+  # nginx
+  transaction-nginx-service:
+    image: nginx:stable-alpine
+    container_name: transaction-nginx-container
+    ports:
+      - "8083:80"
+    volumes:
+      - ./transaction-service/app:/var/www/project
+      - ./transaction-service/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - transaction-php83-service
+    networks:
+      - student-exam-management-network
+
+  # php
+  transaction-php83-service:
+    build:
+      context: .
+      dockerfile: ./transaction-service/php/Dockerfile
+    container_name: transaction-php83-container
+    volumes:
+      - ./transaction-service/app:/var/www/project
+    networks:
+      - student-exam-management-network

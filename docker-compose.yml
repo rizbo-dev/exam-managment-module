@@ -40,8 +40,6 @@ services:
       context: .
       dockerfile: ./student-service/php/Dockerfile
     container_name: student-php83-container
-    ports:
-      - "9000:9000"
     volumes:
       - ./student-service/app:/var/www/project
     networks:
@@ -67,9 +65,33 @@ services:
       context: .
       dockerfile: ./exam-service/php/Dockerfile
     container_name: exam-php83-container
-    ports:
-      - "9001:9000"
     volumes:
       - ./exam-service/app:/var/www/project
+    networks:
+      - student-exam-management-network
+
+  # Class service
+  # nginx
+  class-nginx-service:
+    image: nginx:stable-alpine
+    container_name: class-nginx-container
+    ports:
+      - "8082:80"
+    volumes:
+      - ./class-service/app:/var/www/project
+      - ./class-service/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - class-php83-service
+    networks:
+      - student-exam-management-network
+
+  # php
+  class-php83-service:
+    build:
+      context: .
+      dockerfile: ./class-service/php/Dockerfile
+    container_name: class-php83-container
+    volumes:
+      - ./class-service/app:/var/www/project
     networks:
       - student-exam-management-network

@@ -1,0 +1,16 @@
+framework:
+    messenger:
+        transports:
+            student_update:
+                serializer:  messenger.transport.symfony_serializer
+                dsn: '%env(STUDENT_BUS_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: student_update
+                        type: fanout
+                    queues:
+                        student_update_email: ~
+
+
+        routing:
+            'App\Message\StudentUpdateMessage': student_update

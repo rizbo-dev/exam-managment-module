@@ -30,6 +30,15 @@ services:
       - ./rabbitmq/log/:/var/log/rabbitmq
     networks:
       - student-exam-management-network
+  mailhog-service:
+    image: mailhog/mailhog
+    container_name: mailhog-container
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - student-exam-management-network
+
   #Student service
   # nginx
   student-nginx-service:

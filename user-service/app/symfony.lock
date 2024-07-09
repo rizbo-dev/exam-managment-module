@@ -41,7 +41,7 @@
         ]
     },
     "nelmio/cors-bundle": {
-        "version": "2.4",
+        "version": "2.5",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",

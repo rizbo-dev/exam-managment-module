@@ -39,31 +39,31 @@ services:
     networks:
       - student-exam-management-network
 
-  #Student service
+  #User service
   # nginx
-  student-nginx-service:
+  user-nginx-service:
     image: nginx:stable-alpine
-    container_name: student-nginx-container
+    container_name: user-nginx-container
     ports:
       - "8080:80"
     volumes:
-      - ./student-service/app:/var/www/project
-      - ./student-service/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./user-service/app:/var/www/project
+      - ./user-service/nginx/default.conf:/etc/nginx/conf.d/default.conf
     env_file:
-      - ./student-service/app/.env.local
+      - ./user-service/app/.env.local
     depends_on:
-      - student-php83-service
+      - user-php83-service
     networks:
       - student-exam-management-network
 
   # php
-  student-php83-service:
+  user-php83-service:
     build:
       context: .
-      dockerfile: ./student-service/php/Dockerfile
-    container_name: student-php83-container
+      dockerfile: ./user-service/php/Dockerfile
+    container_name: user-php83-container
     volumes:
-      - ./student-service/app:/var/www/project
+      - ./user-service/app:/var/www/project
     networks:
       - student-exam-management-network
   # Exam service
@@ -167,5 +167,31 @@ services:
     container_name: email-php83-container
     volumes:
       - ./email-service/app:/var/www/project
+    networks:
+      - student-exam-management-network
+
+  # Email service
+  # nginx
+  exam-registration-service-nginx-service:
+    image: nginx:stable-alpine
+    container_name: exam-registration-nginx-container
+    ports:
+      - "8085:80"
+    volumes:
+      - ./exam-registration-service/app:/var/www/project
+      - ./exam-registration-service/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - exam-registration-php83-service
+    networks:
+      - student-exam-management-network
+
+  #  php
+  exam-registration-php83-service:
+    build:
+      context: .
+      dockerfile: ./exam-registration-service/php/Dockerfile
+    container_name: exam-registration-php83-container
+    volumes:
+      - ./exam-registration-service/app:/var/www/project
     networks:
       - student-exam-management-network

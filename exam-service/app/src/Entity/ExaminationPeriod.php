@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ExaminationPeriodRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,6 +26,17 @@ class ExaminationPeriod
 
     #[ORM\Column(length: 255)]
     private ?string $endDate = null;
+
+    /**
+     * @var Collection<int, Exam>
+     */
+    #[ORM\OneToMany(targetEntity: Exam::class, mappedBy: 'examinationPeriod')]
+    private Collection $exams;
+
+    public function __construct()
+    {
+        $this->exams = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -62,6 +75,36 @@ class ExaminationPeriod
     public function setEndDate(string $endDate): static
     {
         $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Exam>
+     */
+    public function getExams(): Collection
+    {
+        return $this->exams;
+    }
+
+    public function addExam(Exam $exam): static
+    {
+        if (!$this->exams->contains($exam)) {
+            $this->exams->add($exam);
+            $exam->setExaminationPeriod($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExam(Exam $exam): static
+    {
+        if ($this->exams->removeElement($exam)) {
+            // set the owning side to null (unless already changed)
+            if ($exam->getExaminationPeriod() === $this) {
+                $exam->setExaminationPeriod(null);
+            }
+        }
 
         return $this;
     }

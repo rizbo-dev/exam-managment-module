@@ -8,6 +8,36 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: SagaItemRepository::class)]
 class SagaItem
 {
+    public const INITIALIZED_STATUS = 'initialized';
+
+    public const ITEMS = [
+        [
+            'sagaType' => 'userClassVerificationSagaItem',
+            'type' => 'validation',
+            'executionOrder' => 1
+        ],
+        [
+            'sagaType' => 'userWalletValidationSagaItem',
+            'type' => 'validation',
+            'executionOrder' => 2
+        ],
+        [
+            'sagaType' => 'userWalletInsertSagaItem',
+            'type' => 'modification',
+            'executionOrder' => 3
+        ],
+        [
+            'sagaType' => 'examValidationSagaItem',
+            'type' => 'validation',
+            'executionOrder' => 4
+        ],
+        [
+            'sagaType' => 'examRegistrationSagaItem',
+            'type' => 'validation',
+            'executionOrder' => 5
+        ],
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -23,10 +53,17 @@ class SagaItem
     private ?\DateTimeImmutable $finishedAt = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private ?string $status = self::INITIALIZED_STATUS;
 
-    #[ORM\OneToOne(mappedBy: 'userClassVerificationSagaItem', cascade: ['persist', 'remove'])]
-    private ?ExamRegistrationSaga $examRegistrationSaga = null;
+    #[ORM\Column]
+    private ?int $executionOrder = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $sagaType = null;
+
+    #[ORM\ManyToOne(inversedBy: 'sagaItems')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ExamRegistration $examRegistration = null;
 
     public function getId(): ?int
     {
@@ -81,19 +118,38 @@ class SagaItem
         return $this;
     }
 
-    public function getExamRegistrationSaga(): ?ExamRegistrationSaga
+    public function getExecutionOrder(): ?int
     {
-        return $this->examRegistrationSaga;
+        return $this->executionOrder;
     }
 
-    public function setExamRegistrationSaga(ExamRegistrationSaga $examRegistrationSaga): static
+    public function setExecutionOrder(int $executionOrder): static
     {
-        // set the owning side of the relation if necessary
-        if ($examRegistrationSaga->getUserClassVerificationSagaItem() !== $this) {
-            $examRegistrationSaga->setUserClassVerificationSagaItem($this);
-        }
+        $this->executionOrder = $executionOrder;
 
-        $this->examRegistrationSaga = $examRegistrationSaga;
+        return $this;
+    }
+
+    public function getSagaType(): ?string
+    {
+        return $this->sagaType;
+    }
+
+    public function setSagaType(string $sagaType): static
+    {
+        $this->sagaType = $sagaType;
+
+        return $this;
+    }
+
+    public function getExamRegistration(): ?ExamRegistration
+    {
+        return $this->examRegistration;
+    }
+
+    public function setExamRegistration(?ExamRegistration $examRegistration): static
+    {
+        $this->examRegistration = $examRegistration;
 
         return $this;
     }

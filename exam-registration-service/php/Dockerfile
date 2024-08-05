@@ -10,9 +10,9 @@ RUN apt-get update && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzi
     && docker-php-ext-install zip
 
 RUN apt-get install -y supervisor
-COPY email-service/supervisor/ /etc/supervisor/conf.d/
+COPY exam-registration-service/supervisor/ /etc/supervisor/conf.d/
 CMD ["supervisord", "-n",  "-c" , "/etc/supervisor/supervisord.conf"]
-RUN echo 'cao'
+
 WORKDIR /var/www/project
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

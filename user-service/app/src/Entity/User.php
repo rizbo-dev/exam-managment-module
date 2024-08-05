@@ -26,6 +26,9 @@ class User
     #[ORM\Column]
     private ?int $departmentId = null;
 
+    #[ORM\Column]
+    private ?int $studyProgramId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class User
     public function setDepartmentId(int $departmentId): static
     {
         $this->departmentId = $departmentId;
+
+        return $this;
+    }
+
+    public function getStudyProgramId(): ?int
+    {
+        return $this->studyProgramId;
+    }
+
+    public function setStudyProgramId(int $studyProgramId): static
+    {
+        $this->studyProgramId = $studyProgramId;
 
         return $this;
     }

@@ -49,7 +49,7 @@ class SagaItem
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $startedAt = null;
 
     #[ORM\Column(nullable: true)]

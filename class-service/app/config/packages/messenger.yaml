@@ -5,7 +5,6 @@ framework:
                 serializer: messenger.transport.symfony_serializer
                 dsn: '%env(USER_CLASS_VERIFICATION_TRANSPORT_DSN)%'
                 options:
-                    auto_setup: false
                     exchange:
                         name: user-class-verification
                         type: direct
@@ -16,11 +15,3 @@ framework:
 
         routing:
             'App\Message\UserClassVerificationMessage': user_class_verification_transport
-
-# when@test:
-#    framework:
-#        messenger:
-#            transports:
-#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
-#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
-#                async: 'in-memory://'

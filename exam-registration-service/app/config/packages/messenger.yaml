@@ -1,6 +1,18 @@
 framework:
     messenger:
         transports:
+            response_saga_item_transport:
+                serializer: messenger.transport.symfony_serializer
+                dsn: '%env(RESPONSE_SAGA_ITEM_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: response-saga-item
+                        type: direct
+                        default_publish_routing_key: response-saga-item
+                    queues:
+                        response-saga-item:
+                            binding_keys: [ 'response-saga-item' ]
+
             user_class_verification_transport:
                 serializer: messenger.transport.symfony_serializer
                 dsn: '%env(USER_CLASS_VERIFICATION_TRANSPORT_DSN)%'
@@ -16,6 +28,7 @@ framework:
 
         routing:
             'App\Message\UserClassVerificationMessage': user_class_verification_transport
+            'App\Message\ResponseSagaItemMessage': response_saga_item_transport
 
 # when@test:
 #    framework:

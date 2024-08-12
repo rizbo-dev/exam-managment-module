@@ -2,15 +2,18 @@
 
 namespace App\MessageHandler;
 
+use App\Message\ResponseSagaItemMessage;
 use App\Message\UserClassVerificationMessage;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsMessageHandler]
-class UserClassVerificationMessageHandler
+readonly class UserClassVerificationMessageHandler
 {
     public function __construct(
-        private  readonly LoggerInterface $logger
+        private LoggerInterface $logger,
+        private MessageBusInterface $messageBus
     )
     {
     }
@@ -18,5 +21,15 @@ class UserClassVerificationMessageHandler
     public function __invoke(UserClassVerificationMessage $classVerificationMessage)
     {
         $this->logger->info('Consumed');
+
+        //TODO handle this action
+
+        $message = new ResponseSagaItemMessage();
+        $message
+            ->setSagaType(ResponseSagaItemMessage::USER_CLASS_VERIFICATION_SAGA_ITEM_TYPE)
+            ->setStatus('finished')
+            ->setExamRegistrationId($classVerificationMessage->getExamRegistrationId());
+
+        $this->messageBus->dispatch($message);
     }
 }

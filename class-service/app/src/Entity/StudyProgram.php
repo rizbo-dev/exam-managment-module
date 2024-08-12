@@ -27,9 +27,16 @@ class StudyProgram
     #[ORM\ManyToMany(targetEntity: Course::class, mappedBy: 'studyProgram')]
     private Collection $courses;
 
+    /**
+     * @var Collection<int, Student>
+     */
+    #[ORM\OneToMany(targetEntity: Student::class, mappedBy: 'studyProgram')]
+    private Collection $students;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
+        $this->students = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,6 +90,36 @@ class StudyProgram
     {
         if ($this->courses->removeElement($course)) {
             $course->removeStudyProgram($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Student>
+     */
+    public function getStudents(): Collection
+    {
+        return $this->students;
+    }
+
+    public function addStudent(Student $student): static
+    {
+        if (!$this->students->contains($student)) {
+            $this->students->add($student);
+            $student->setStudyProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudent(Student $student): static
+    {
+        if ($this->students->removeElement($student)) {
+            // set the owning side to null (unless already changed)
+            if ($student->getStudyProgram() === $this) {
+                $student->setStudyProgram(null);
+            }
         }
 
         return $this;

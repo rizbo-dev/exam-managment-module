@@ -13,15 +13,16 @@ class SagaItem
     public const FINISHED = 'finished';
 
     public const USER_CLASS_VERIFICATION_SAGA_ITEM_TYPE = 'userClassVerificationSagaItem';
+    public const USER_WALLET_VALIDATION_SAGA_ITEM_TYPE = 'userWalletValidationSagaItem';
 
     public const ITEMS = [
         [
-            'sagaType' => 'userClassVerificationSagaItem',
+            'sagaType' => self::USER_CLASS_VERIFICATION_SAGA_ITEM_TYPE,
             'type' => 'validation',
             'executionOrder' => 1
         ],
         [
-            'sagaType' => 'userWalletValidationSagaItem',
+            'sagaType' => self::USER_WALLET_VALIDATION_SAGA_ITEM_TYPE,
             'type' => 'validation',
             'executionOrder' => 2
         ],

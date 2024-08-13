@@ -20,5 +20,13 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    _instanceof:
+        App\Service\ResponseSagaItemResolver\ResponseSagaItemResolverInterface:
+            tags: ['response_saga_item_resolver']
+
+    App\MessageHandler\ResponseSagaItemMessageHandler:
+        arguments:
+            - !tagged_iterator { tag: 'response_saga_item_resolver', default_index_method: 'getResolverType' }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

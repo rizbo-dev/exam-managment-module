@@ -10,6 +10,8 @@ class ResponseSagaItemMessage
     private string $sagaType;
     private int $examRegistrationId;
 
+    private array $payload;
+
     public function getStatus(): string
     {
         return $this->status;
@@ -40,6 +42,17 @@ class ResponseSagaItemMessage
     public function setExamRegistrationId(int $examRegistrationId): ResponseSagaItemMessage
     {
         $this->examRegistrationId = $examRegistrationId;
+        return $this;
+    }
+
+    public function getPayload(): array
+    {
+        return $this->payload;
+    }
+
+    public function setPayload(array $payload): ResponseSagaItemMessage
+    {
+        $this->payload = $payload;
         return $this;
     }
 }

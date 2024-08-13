@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Dto\CreateExamRegistrationDto;
 use App\Entity\ExamRegistration;
 use App\Entity\SagaItem;
+use App\Service\SagaItemDispatcher\SagaItemDispatcherService;
 use Doctrine\ORM\EntityManagerInterface;
 use http\Exception\RuntimeException;
 
@@ -12,7 +13,7 @@ readonly class ExamRegistrationService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private SagaService $sagaService
+        private SagaItemDispatcherService $sagaItemDispatcherService
     )
     {
     }
@@ -34,7 +35,8 @@ readonly class ExamRegistrationService
         if (!$userClassVerificationSagaItem) {
             throw new RuntimeException('handle exception');
         }
-        $this->sagaService->dispatchUserClassVerificationSagaItem($userClassVerificationSagaItem);
+
+        $this->sagaItemDispatcherService->dispatch($userClassVerificationSagaItem);
 
         return $examRegistration;
     }

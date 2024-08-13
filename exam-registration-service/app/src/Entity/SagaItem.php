@@ -10,6 +10,7 @@ class SagaItem
 {
     public const INITIALIZED_STATUS = 'initialized';
     public const IN_PROGRESS = 'in_progress';
+    public const FINISHED = 'finished';
 
     public const USER_CLASS_VERIFICATION_SAGA_ITEM_TYPE = 'userClassVerificationSagaItem';
 

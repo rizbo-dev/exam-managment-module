@@ -28,7 +28,10 @@ readonly class UserClassVerificationMessageHandler
         $message
             ->setSagaType(ResponseSagaItemMessage::USER_CLASS_VERIFICATION_SAGA_ITEM_TYPE)
             ->setStatus('finished')
-            ->setExamRegistrationId($classVerificationMessage->getExamRegistrationId());
+            ->setExamRegistrationId($classVerificationMessage->getExamRegistrationId())
+            ->setPayload([
+                'isValid' => true
+            ]);
 
         $this->messageBus->dispatch($message);
     }

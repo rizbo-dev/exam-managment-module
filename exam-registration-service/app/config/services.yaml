@@ -23,10 +23,16 @@ services:
     _instanceof:
         App\Service\ResponseSagaItemResolver\ResponseSagaItemResolverInterface:
             tags: ['response_saga_item_resolver']
+        App\Service\SagaItemDispatcher\SagaItemDispatcherInterface:
+            tags: ['saga_item_dispatcher']
 
     App\MessageHandler\ResponseSagaItemMessageHandler:
         arguments:
             - !tagged_iterator { tag: 'response_saga_item_resolver', default_index_method: 'getResolverType' }
+
+    App\Service\SagaItemDispatcher\SagaItemDispatcherService:
+        arguments:
+            - !tagged_iterator { tag: 'saga_item_dispatcher', default_index_method: 'getDispatcherType' }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

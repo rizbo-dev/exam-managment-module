@@ -25,10 +25,23 @@ framework:
                     queues:
                         user-class-verification:
                             binding_keys: ['user-class-verification']
+            user_wallet_validation_transport:
+                serializer: messenger.transport.symfony_serializer
+                dsn: '%env(USER_WALLET_VALIDATION_TRANSPORT_DSN)%'
+                options:
+                    auto_setup: false
+                    exchange:
+                        name: user-wallet-validation
+                        type: direct
+                        default_publish_routing_key: user-wallet-validation
+                    queues:
+                        user-wallet-validation:
+                            binding_keys: [ 'user-wallet-validation' ]
 
         routing:
             'App\Message\UserClassVerificationMessage': user_class_verification_transport
             'App\Message\ResponseSagaItemMessage': response_saga_item_transport
+            'App\Message\UserWalletValidationMessage': user_wallet_validation_transport
 
 # when@test:
 #    framework:

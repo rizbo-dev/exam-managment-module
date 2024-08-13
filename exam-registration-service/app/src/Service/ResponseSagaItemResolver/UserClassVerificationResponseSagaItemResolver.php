@@ -5,6 +5,7 @@ namespace App\Service\ResponseSagaItemResolver;
 use App\Entity\ExamRegistration;
 use App\Entity\SagaItem;
 use App\Message\ResponseSagaItemMessage;
+use App\Service\SagaItemDispatcher\SagaItemDispatcherService;
 use App\Service\SagaItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -13,7 +14,8 @@ readonly class UserClassVerificationResponseSagaItemResolver implements Response
 {
     public function __construct(
         private LoggerInterface $logger,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private SagaItemDispatcherService $sagaItemDispatcherService
     )
     {
     }
@@ -34,7 +36,9 @@ readonly class UserClassVerificationResponseSagaItemResolver implements Response
 
             $this->entityManager->flush();
 
-            $nextSaga = SagaItemService::getNextItemForExecution($userClassVerificationSagaItem);
+            $nextSaga = SagaItemService::getNextItemForExecution($userClassVerificationSagaItem->getExamRegistration()->getSagaItems());
+
+            $this->sagaItemDispatcherService->dispatch($nextSaga);
         }
     }
 

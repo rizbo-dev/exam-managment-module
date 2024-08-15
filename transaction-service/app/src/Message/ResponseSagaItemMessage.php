@@ -5,6 +5,7 @@ namespace App\Message;
 class ResponseSagaItemMessage
 {
     public const USER_WALLET_VALIDATION_SAGA_ITEM_TYPE = 'userWalletValidationSagaItem';
+    public const USER_WALLET_INSERT_SAGA_ITEM_TYPE = 'userWalletInsertSagaItem';
 
     private string $status;
     private string $sagaType;

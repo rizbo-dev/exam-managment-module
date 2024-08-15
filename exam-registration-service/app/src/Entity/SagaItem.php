@@ -14,6 +14,7 @@ class SagaItem
 
     public const USER_CLASS_VERIFICATION_SAGA_ITEM_TYPE = 'userClassVerificationSagaItem';
     public const USER_WALLET_VALIDATION_SAGA_ITEM_TYPE = 'userWalletValidationSagaItem';
+    public const USER_WALLET_INSERT_SAGA_ITEM_TYPE = 'userWalletInsertSagaItem';
 
     public const ITEMS = [
         [
@@ -27,7 +28,7 @@ class SagaItem
             'executionOrder' => 2
         ],
         [
-            'sagaType' => 'userWalletInsertSagaItem',
+            'sagaType' => self::USER_WALLET_INSERT_SAGA_ITEM_TYPE,
             'type' => 'modification',
             'executionOrder' => 3
         ],
@@ -69,6 +70,9 @@ class SagaItem
     #[ORM\ManyToOne(inversedBy: 'sagaItems')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ExamRegistration $examRegistration = null;
+
+    #[ORM\Column]
+    private array $returnedPayload = [];
 
     public function getId(): ?int
     {
@@ -155,6 +159,18 @@ class SagaItem
     public function setExamRegistration(?ExamRegistration $examRegistration): static
     {
         $this->examRegistration = $examRegistration;
+
+        return $this;
+    }
+
+    public function getReturnedPayload(): array
+    {
+        return $this->returnedPayload;
+    }
+
+    public function setReturnedPayload(array $returnedPayload): static
+    {
+        $this->returnedPayload = $returnedPayload;
 
         return $this;
     }

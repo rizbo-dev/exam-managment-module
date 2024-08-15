@@ -32,7 +32,8 @@ class UserWalletValidationMessageHandler
             sagaType: ResponseSagaItemMessage::USER_WALLET_VALIDATION_SAGA_ITEM_TYPE,
             examRegistrationId: $message->getExamRegistrationId(),
             payload: [
-                'isValid' => true
+                'isValid' => true,
+                'examCreditValue' => 1000
             ]
         );
 

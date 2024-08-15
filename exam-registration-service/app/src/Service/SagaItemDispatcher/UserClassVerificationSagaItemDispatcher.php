@@ -6,10 +6,10 @@ use App\Entity\SagaItem;
 use App\Message\UserClassVerificationMessage;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class UserClassVerificationSagaItemDispatcher implements SagaItemDispatcherInterface
+readonly class UserClassVerificationSagaItemDispatcher implements SagaItemDispatcherInterface
 {
     public function __construct(
-        private readonly MessageBusInterface $messageBus
+        private MessageBusInterface $messageBus
     )
     {
     }

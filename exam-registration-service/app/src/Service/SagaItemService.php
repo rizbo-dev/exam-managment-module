@@ -33,4 +33,15 @@ class SagaItemService
 
         return null;
     }
+
+    public static function getUserWalletValidationSagaItem(ExamRegistration $examRegistration): ?SagaItem
+    {
+        foreach ($examRegistration->getSagaItems() as $sagaItem) {
+            if ($sagaItem->getSagaType() === SagaItem::USER_WALLET_VALIDATION_SAGA_ITEM_TYPE) {
+                return $sagaItem;
+            }
+        }
+
+        return null;
+    }
 }

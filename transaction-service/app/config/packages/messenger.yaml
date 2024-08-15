@@ -22,11 +22,23 @@ framework:
                         default_publish_routing_key: response-saga-item
                     queues:
                         response-saga-item:
-                            binding_keys: [ 'response-saga-item' ]
+                            binding_keys: [ 'response-saga-item']
+            user_wallet_insert_transport:
+                serializer: messenger.transport.symfony_serializer
+                dsn: '%env(USER_WALLET_INSERT_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: user-wallet-insert
+                        type: direct
+                        default_publish_routing_key: user-wallet-insert
+                    queues:
+                        user-wallet-insert:
+                            binding_keys: [ 'user-wallet-insert' ]
 
         routing:
             'App\Message\UserWalletValidationMessage': user_wallet_validation_transport
             'App\Message\ResponseSagaItemMessage': response_saga_item_transport
+            'App\Message\UserWalletInsertMessage': user_wallet_insert_transport
 
 
 # when@test:

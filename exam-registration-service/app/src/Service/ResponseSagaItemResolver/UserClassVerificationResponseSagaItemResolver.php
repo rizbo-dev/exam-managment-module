@@ -23,16 +23,15 @@ readonly class UserClassVerificationResponseSagaItemResolver implements Response
     public function resolve(ResponseSagaItemMessage $responseSagaItemMessage): void
     {
         $payload = $responseSagaItemMessage->getPayload();
-
         $examRegistration = $this->entityManager->getRepository(ExamRegistration::class)->find($responseSagaItemMessage->getExamRegistrationId());
-
         $userClassVerificationSagaItem = SagaItemService::getUserClassVerificationSagaItem($examRegistration);
 
 
         if ($payload['isValid']) {
             $userClassVerificationSagaItem
                 ->setStatus(SagaItem::FINISHED)
-                ->setFinishedAt(new \DateTimeImmutable());
+                ->setFinishedAt(new \DateTimeImmutable())
+                ->setReturnedPayload($payload);
 
             $this->entityManager->flush();
 

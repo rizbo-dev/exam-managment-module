@@ -15,6 +15,7 @@ class SagaItem
     public const USER_CLASS_VERIFICATION_SAGA_ITEM_TYPE = 'userClassVerificationSagaItem';
     public const USER_WALLET_VALIDATION_SAGA_ITEM_TYPE = 'userWalletValidationSagaItem';
     public const USER_WALLET_INSERT_SAGA_ITEM_TYPE = 'userWalletInsertSagaItem';
+    public const EXAM_REGISTRATION_SAGA_ITEM_TYPE = 'examRegistrationSagaItem';
 
     public const ITEMS = [
         [
@@ -33,14 +34,9 @@ class SagaItem
             'executionOrder' => 3
         ],
         [
-            'sagaType' => 'examValidationSagaItem',
-            'type' => 'validation',
+            'sagaType' => self::EXAM_REGISTRATION_SAGA_ITEM_TYPE,
+            'type' => 'modification',
             'executionOrder' => 4
-        ],
-        [
-            'sagaType' => 'examRegistrationSagaItem',
-            'type' => 'validation',
-            'executionOrder' => 5
         ],
     ];
 

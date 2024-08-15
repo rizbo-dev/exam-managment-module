@@ -8,10 +8,10 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsMessageHandler]
-class UserWalletValidationMessageHandler
+readonly class UserWalletValidationMessageHandler
 {
     public function __construct(
-        private readonly MessageBusInterface $messageBus,
+        private MessageBusInterface $messageBus,
 
     )
     {

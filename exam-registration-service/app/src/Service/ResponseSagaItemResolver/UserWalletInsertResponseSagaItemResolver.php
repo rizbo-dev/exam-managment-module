@@ -9,8 +9,9 @@ use App\Service\SagaItemDispatcher\SagaItemDispatcherService;
 use App\Service\SagaItemService;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class UserWalletValidationResponseSagaItemResolver implements ResponseSagaItemResolverInterface
+readonly class UserWalletInsertResponseSagaItemResolver implements ResponseSagaItemResolverInterface
 {
+
     public function __construct(
         private EntityManagerInterface    $entityManager,
         private SagaItemDispatcherService $sagaItemDispatcherService
@@ -41,6 +42,6 @@ readonly class UserWalletValidationResponseSagaItemResolver implements ResponseS
 
     public static function getResolverType(): string
     {
-        return SagaItem::USER_WALLET_VALIDATION_SAGA_ITEM_TYPE;
+        return SagaItem::USER_WALLET_INSERT_SAGA_ITEM_TYPE;
     }
 }

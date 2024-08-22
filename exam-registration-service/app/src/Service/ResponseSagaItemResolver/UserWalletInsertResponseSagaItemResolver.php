@@ -23,18 +23,18 @@ readonly class UserWalletInsertResponseSagaItemResolver implements ResponseSagaI
     {
         $payload = $responseSagaItemMessage->getPayload();
         $examRegistration = $this->entityManager->getRepository(ExamRegistration::class)->find($responseSagaItemMessage->getExamRegistrationId());
-        $userClassVerificationSagaItem = SagaItemService::getUserWalletValidationSagaItem($examRegistration);
+        $userWalletInsertResponseSagaItem = SagaItemService::getUserWalletInsertSagaItem($examRegistration);
 
 
-        if ($payload['isValid']) {
-            $userClassVerificationSagaItem
+        if ($payload['transactionId']) {
+            $userWalletInsertResponseSagaItem
                 ->setStatus(SagaItem::FINISHED)
                 ->setFinishedAt(new \DateTimeImmutable())
                 ->setReturnedPayload($payload);
 
             $this->entityManager->flush();
 
-            $nextSaga = SagaItemService::getNextItemForExecution($userClassVerificationSagaItem->getExamRegistration()->getSagaItems());
+            $nextSaga = SagaItemService::getNextItemForExecution($userWalletInsertResponseSagaItem->getExamRegistration()->getSagaItems());
 
             $this->sagaItemDispatcherService->dispatch($nextSaga);
         }

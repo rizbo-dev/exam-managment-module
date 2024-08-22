@@ -24,7 +24,6 @@ readonly class UserWalletValidationResponseSagaItemResolver implements ResponseS
         $examRegistration = $this->entityManager->getRepository(ExamRegistration::class)->find($responseSagaItemMessage->getExamRegistrationId());
         $userClassVerificationSagaItem = SagaItemService::getUserWalletValidationSagaItem($examRegistration);
 
-
         if ($payload['isValid']) {
             $userClassVerificationSagaItem
                 ->setStatus(SagaItem::FINISHED)

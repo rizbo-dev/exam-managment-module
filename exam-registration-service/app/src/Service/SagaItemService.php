@@ -44,4 +44,26 @@ class SagaItemService
 
         return null;
     }
+
+    public static function getUserWalletInsertSagaItem(ExamRegistration $examRegistration): ?SagaItem
+    {
+        foreach ($examRegistration->getSagaItems() as $sagaItem) {
+            if ($sagaItem->getSagaType() === SagaItem::USER_WALLET_INSERT_SAGA_ITEM_TYPE) {
+                return $sagaItem;
+            }
+        }
+
+        return null;
+    }
+
+    public static function getExamRegistrationSagaItem(ExamRegistration $examRegistration): ?SagaItem
+    {
+        foreach ($examRegistration->getSagaItems() as $sagaItem) {
+            if ($sagaItem->getSagaType() === SagaItem::EXAM_REGISTRATION_SAGA_ITEM_TYPE) {
+                return $sagaItem;
+            }
+        }
+
+        return null;
+    }
 }

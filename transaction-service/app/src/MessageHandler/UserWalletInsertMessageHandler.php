@@ -23,13 +23,14 @@ readonly class UserWalletInsertMessageHandler
          * Descrease amount on user wallet
          */
 
-        $message = new ResponseSagaItemMessage();
-        $message->setStatus('finished')
-                ->setSagaType(ResponseSagaItemMessage::USER_WALLET_INSERT_SAGA_ITEM_TYPE)
-                ->setExamRegistrationId($message->getExamRegistrationId())
-                ->setPayload([
-                    'transactionId' => 1
-                ]);
+        $message = new ResponseSagaItemMessage(
+            status: 'finished',
+            sagaType: ResponseSagaItemMessage::USER_WALLET_INSERT_SAGA_ITEM_TYPE,
+            examRegistrationId: $message->getExamRegistrationId(),
+            payload: [
+                'transactionId' => 1
+            ]
+        );
 
         $this->messageBus->dispatch($message);
     }

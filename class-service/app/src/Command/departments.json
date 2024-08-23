@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Computer Science",
+    "studyPrograms": [
+      "Software Engineering",
+      "Artificial Intelligence",
+      "Cybersecurity"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Electrical Engineering",
+    "studyPrograms": [
+      "Power Systems",
+      "Telecommunications",
+      "Control Systems"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Mechanical Engineering",
+    "studyPrograms": [
+      "Robotics",
+      "Thermodynamics",
+      "Manufacturing"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Civil Engineering",
+    "studyPrograms": [
+      "Structural Engineering",
+      "Transportation Engineering",
+      "Environmental Engineering"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Mathematics",
+    "studyPrograms": [
+      "Pure Mathematics",
+      "Applied Mathematics",
+      "Statistics"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Physics",
+    "studyPrograms": [
+      "Quantum Mechanics",
+      "Astrophysics",
+      "Condensed Matter Physics"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Chemistry",
+    "studyPrograms": [
+      "Organic Chemistry",
+      "Inorganic Chemistry",
+      "Biochemistry"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Biology",
+    "studyPrograms": [
+      "Molecular Biology",
+      "Ecology",
+      "Genetics"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Economics",
+    "studyPrograms": [
+      "Macroeconomics",
+      "Microeconomics",
+      "Econometrics"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Psychology",
+    "studyPrograms": [
+      "Clinical Psychology",
+      "Cognitive Psychology",
+      "Developmental Psychology"
+    ]
+  }
+]

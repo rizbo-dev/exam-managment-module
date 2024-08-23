@@ -16,7 +16,7 @@ class Course
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $techerId = null;
+    private ?int $teacherId = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -37,14 +37,14 @@ class Course
         return $this->id;
     }
 
-    public function getTecherId(): ?int
+    public function getTeacherId(): ?int
     {
-        return $this->techerId;
+        return $this->teacherId;
     }
 
-    public function setTecherId(int $techerId): static
+    public function setTeacherId(int $teacherId): static
     {
-        $this->techerId = $techerId;
+        $this->teacherId = $teacherId;
 
         return $this;
     }

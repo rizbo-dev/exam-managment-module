@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "name": "Data Structures and Algorithms",
+    "studyPrograms": [1, 2]
+  },
+  {
+    "id": 2,
+    "name": "Machine Learning",
+    "studyPrograms": [2, 3, 16]
+  },
+  {
+    "id": 3,
+    "name": "Power Electronics",
+    "studyPrograms": [4, 6]
+  },
+  {
+    "id": 4,
+    "name": "Fluid Mechanics",
+    "studyPrograms": [7, 9]
+  },
+  {
+    "id": 5,
+    "name": "Structural Analysis",
+    "studyPrograms": [10, 12]
+  },
+  {
+    "id": 6,
+    "name": "Real Analysis",
+    "studyPrograms": [13, 14]
+  },
+  {
+    "id": 7,
+    "name": "Quantum Field Theory",
+    "studyPrograms": [16, 17]
+  },
+  {
+    "id": 8,
+    "name": "Organic Synthesis",
+    "studyPrograms": [19, 21]
+  },
+  {
+    "id": 9,
+    "name": "Genetic Engineering",
+    "studyPrograms": [22, 24]
+  },
+  {
+    "id": 10,
+    "name": "Behavioral Economics",
+    "studyPrograms": [25, 26]
+  },
+  {
+    "id": 11,
+    "name": "Cognitive Neuroscience",
+    "studyPrograms": [29, 30]
+  },
+  {
+    "id": 12,
+    "name": "Advanced Control Systems",
+    "studyPrograms": [6, 7]
+  },
+  {
+    "id": 13,
+    "name": "Statistical Methods",
+    "studyPrograms": [14, 15, 27]
+  },
+  {
+    "id": 14,
+    "name": "Robotics",
+    "studyPrograms": [7, 9, 1]
+  },
+  {
+    "id": 15,
+    "name": "Environmental Impact Assessment",
+    "studyPrograms": [12, 24]
+  }
+]

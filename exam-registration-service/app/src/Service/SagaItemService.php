@@ -75,4 +75,13 @@ class SagaItemService
             }
         }
     }
+
+    public static function markSagaItemsAsFinishedReverted(ExamRegistration $examRegistration): void
+    {
+        foreach ($examRegistration->getSagaItems() as $sagaItem) {
+            if ($sagaItem->getFinishedAt() === null) {
+                $sagaItem->setStatus('finished_reverted');
+            }
+        }
+    }
 }

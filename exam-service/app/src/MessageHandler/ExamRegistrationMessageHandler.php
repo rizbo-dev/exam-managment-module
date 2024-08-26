@@ -23,24 +23,36 @@ readonly class ExamRegistrationMessageHandler
 
     public function __invoke(ExamRegistrationMessage $message): void
     {
-        $examStudent = new ExamStudent();
-        $exam = $this->entityManager->getRepository(Exam::class)->find($message->getExamId());
+        try {
+            $examStudent = new ExamStudent();
+            $exam = $this->entityManager->getRepository(Exam::class)->find($message->getExamId());
 
-        $examStudent->setExam($exam)
-                    ->setStudentId($message->getStudentId());
+            $examStudent->setExam($exam)
+                ->setStudentId($message->getStudentId());
 
-        $this->entityManager->persist($examStudent);
-        $this->entityManager->flush();
+            $this->entityManager->persist($examStudent);
+            $this->entityManager->flush();
 
-        $responseSagaItem = new ResponseSagaItemMessage();
-        $responseSagaItem
-            ->setExamRegistrationId($message->getExamRegistrationId())
-            ->setPayload([
-                'examStudentId' => $examStudent->getId()
-            ])
-            ->setStatus('finished')
-            ->setSagaType('examRegistrationSagaItem');
+            $responseSagaItem = new ResponseSagaItemMessage();
+            $responseSagaItem
+                ->setExamRegistrationId($message->getExamRegistrationId())
+                ->setPayload([
+                    'examStudentId' => $examStudent->getId()
+                ])
+                ->setStatus('finished')
+                ->setSagaType('examRegistrationSagaItem');
 
-        $this->messageBus->dispatch($responseSagaItem);
+            $this->messageBus->dispatch($responseSagaItem);
+        } catch (\Throwable $throwable) {
+            $responseSagaItem = new ResponseSagaItemMessage();
+            $responseSagaItem
+                ->setExamRegistrationId($message->getExamRegistrationId())
+                ->setPayload([
+                    'message' => $throwable->getMessage()
+                ])
+                ->setStatus('finished')
+                ->setSagaType('examRegistrationSagaItem');
+            $this->messageBus->dispatch($responseSagaItem);
+        }
     }
 }

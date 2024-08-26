@@ -49,6 +49,18 @@ framework:
                     queues:
                         user-wallet-insert:
                             binding_keys: [ 'user-wallet-insert' ]
+            user_wallet_revert_insert_transport:
+                serializer: messenger.transport.symfony_serializer
+                dsn: '%env(USER_WALLET_REVERT_INSERT_TRANSPORT_DSN)%'
+                options:
+                    auto_setup: false
+                    exchange:
+                        name: user-wallet-revert-insert
+                        type: direct
+                        default_publish_routing_key: user-wallet-revert-insert
+                    queues:
+                        user-wallet-revert-insert:
+                            binding_keys: [ 'user-wallet-revert-insert' ]
             exam_registration_transport:
                 serializer: messenger.transport.symfony_serializer
                 dsn: '%env(EXAM_REGISTRATION_TRANSPORT_DSN)%'
@@ -68,6 +80,7 @@ framework:
             'App\Message\UserWalletValidationMessage': user_wallet_validation_transport
             'App\Message\UserWalletInsertMessage': user_wallet_insert_transport
             'App\Message\ExamRegistrationMessage': exam_registration_transport
+            'App\Message\UserWalletRevertMessage': user_wallet_revert_insert_transport
 
 # when@test:
 #    framework:

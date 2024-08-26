@@ -25,6 +25,8 @@ services:
             tags: ['response_saga_item_resolver']
         App\Service\SagaItemDispatcher\SagaItemDispatcherInterface:
             tags: ['saga_item_dispatcher']
+        App\Service\SagaItemRevertDispatcher\SagaItemRevertDispatcherInterface:
+            tags: [ 'saga_item_revert_dispatcher' ]
 
     App\MessageHandler\ResponseSagaItemMessageHandler:
         arguments:
@@ -33,6 +35,10 @@ services:
     App\Service\SagaItemDispatcher\SagaItemDispatcherService:
         arguments:
             - !tagged_iterator { tag: 'saga_item_dispatcher', default_index_method: 'getDispatcherType' }
+
+    App\Service\SagaItemRevertDispatcher\SagaItemRevertDispatcherService:
+        arguments:
+            - !tagged_iterator { tag: 'saga_item_revert_dispatcher', default_index_method: 'getDispatcherType' }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

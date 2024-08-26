@@ -5,13 +5,15 @@ namespace App\Service\ResponseSagaItemResolver;
 use App\Entity\ExamRegistration;
 use App\Entity\SagaItem;
 use App\Message\ResponseSagaItemMessage;
+use App\Service\SagaItemRevertDispatcher\SagaItemRevertDispatcherService;
 use App\Service\SagaItemService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ExamRegistrationResponseSagaItemResolver implements ResponseSagaItemResolverInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager,
+        private readonly SagaItemRevertDispatcherService $dispatcherService
     )
     {
     }
@@ -28,6 +30,13 @@ class ExamRegistrationResponseSagaItemResolver implements ResponseSagaItemResolv
             ->setReturnedPayload($payload);
 
         $this->entityManager->flush();
+
+        if (isset($payload['message'])) {
+            SagaItemService::markSagaItemsAsCanceled($examRegistration);
+            foreach ($examRegistration->getSagaItems() as $sagaItem) {
+                $this->dispatcherService->revert($sagaItem);
+            }
+        }
     }
 
     public static function getResolverType(): string

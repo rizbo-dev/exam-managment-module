@@ -25,6 +25,8 @@ class ExamRegistration
     #[ORM\Column]
     private ?int $examId = null;
 
+    #[ORM\Column]
+    private ?int $courseId = null;
     #[ORM\Column(length: 255)]
     private ?string $status = self::INITIALIZED_STATUS;
 
@@ -107,6 +109,17 @@ class ExamRegistration
             }
         }
 
+        return $this;
+    }
+
+    public function getCourseId(): ?int
+    {
+        return $this->courseId;
+    }
+
+    public function setCourseId(?int $courseId): ExamRegistration
+    {
+        $this->courseId = $courseId;
         return $this;
     }
 }

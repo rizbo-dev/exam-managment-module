@@ -8,6 +8,8 @@ class CreateExamRegistrationDto
 
     private int $examId;
 
+    private int $courseId;
+
     public function getStudentId(): int
     {
         return $this->studentId;
@@ -26,5 +28,16 @@ class CreateExamRegistrationDto
     public function setExamId(int $examId): void
     {
         $this->examId = $examId;
+    }
+
+    public function getCourseId(): int
+    {
+        return $this->courseId;
+    }
+
+    public function setCourseId(int $courseId): CreateExamRegistrationDto
+    {
+        $this->courseId = $courseId;
+        return $this;
     }
 }

@@ -17,10 +17,13 @@ readonly class UserClassVerificationSagaItemDispatcher implements SagaItemDispat
 
     public function dispatch(SagaItem $sagaItem): void
     {
+
+
         $message = new UserClassVerificationMessage(
             studentId: $sagaItem->getExamRegistration()->getStudentId(),
             examId: $sagaItem->getExamRegistration()->getExamId(),
-            examRegistrationId: $sagaItem->getExamRegistration()->getId()
+            examRegistrationId: $sagaItem->getExamRegistration()->getId(),
+            courseId: $sagaItem->getExamRegistration()->getCourseId()
         );
 
         $this->messageBus->dispatch($message);

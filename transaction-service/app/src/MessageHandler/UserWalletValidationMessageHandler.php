@@ -49,7 +49,7 @@ readonly class UserWalletValidationMessageHandler
             return;
         }
 
-        if (($wallet->getAmount() - $examCost) < 0) {
+        if (($wallet->getBalance() - $examCost) < 0) {
             $message = new ResponseSagaItemMessage(
                 status: 'finished',
                 sagaType: ResponseSagaItemMessage::USER_WALLET_VALIDATION_SAGA_ITEM_TYPE,

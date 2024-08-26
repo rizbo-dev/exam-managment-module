@@ -19,7 +19,7 @@ class Wallet
     private ?int $studentId = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $amount = null;
+    private ?string $balance = null;
 
     /**
      * @var Collection<int, Transaction>
@@ -49,15 +49,14 @@ class Wallet
         return $this;
     }
 
-    public function getAmount(): ?string
+    public function getBalance(): ?string
     {
-        return $this->amount;
+        return $this->balance;
     }
 
-    public function setAmount(string $amount): static
+    public function setBalance(?string $balance): Wallet
     {
-        $this->amount = $amount;
-
+        $this->balance = $balance;
         return $this;
     }
 

@@ -6,6 +6,7 @@ use App\Entity\Transaction;
 use App\Entity\Wallet;
 use App\Message\ResponseSagaItemMessage;
 use App\Message\UserWalletInsertMessage;
+use App\Service\WalletService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -36,7 +37,7 @@ readonly class UserWalletInsertMessageHandler
         $this->entityManager->persist($transaction);
 
         $userWallet->addTransaction($transaction);
-
+        WalletService::syncWalletBalance($userWallet);
         $this->entityManager->flush();
 
         $message = new ResponseSagaItemMessage(

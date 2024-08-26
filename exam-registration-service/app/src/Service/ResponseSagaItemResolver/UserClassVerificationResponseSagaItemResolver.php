@@ -13,8 +13,8 @@ use Psr\Log\LoggerInterface;
 readonly class UserClassVerificationResponseSagaItemResolver implements ResponseSagaItemResolverInterface
 {
     public function __construct(
-        private LoggerInterface $logger,
-        private EntityManagerInterface $entityManager,
+        private LoggerInterface           $logger,
+        private EntityManagerInterface    $entityManager,
         private SagaItemDispatcherService $sagaItemDispatcherService
     )
     {
@@ -27,18 +27,20 @@ readonly class UserClassVerificationResponseSagaItemResolver implements Response
         $userClassVerificationSagaItem = SagaItemService::getUserClassVerificationSagaItem($examRegistration);
 
 
-        if ($payload['isValid']) {
-            $userClassVerificationSagaItem
-                ->setStatus(SagaItem::FINISHED)
-                ->setFinishedAt(new \DateTimeImmutable())
-                ->setReturnedPayload($payload);
+        $userClassVerificationSagaItem
+            ->setStatus(SagaItem::FINISHED)
+            ->setFinishedAt(new \DateTimeImmutable())
+            ->setReturnedPayload($payload);
 
+        $this->entityManager->flush();
+
+        if (!$payload['isValid']) {
+            SagaItemService::markSagaItemsAsCanceled($examRegistration);
             $this->entityManager->flush();
-
-            $nextSaga = SagaItemService::getNextItemForExecution($userClassVerificationSagaItem->getExamRegistration()->getSagaItems());
-
-            $this->sagaItemDispatcherService->dispatch($nextSaga);
+            return;
         }
+            $nextSaga = SagaItemService::getNextItemForExecution($userClassVerificationSagaItem->getExamRegistration()->getSagaItems());
+            $this->sagaItemDispatcherService->dispatch($nextSaga);
     }
 
     public static function getResolverType(): string

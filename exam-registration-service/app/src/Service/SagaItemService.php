@@ -66,4 +66,13 @@ class SagaItemService
 
         return null;
     }
+
+    public static function markSagaItemsAsCanceled(ExamRegistration $examRegistration): void
+    {
+        foreach ($examRegistration->getSagaItems() as $sagaItem) {
+            if ($sagaItem->getFinishedAt() === null) {
+                $sagaItem->setStatus('canceled');
+            }
+        }
+    }
 }

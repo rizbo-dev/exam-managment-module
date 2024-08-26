@@ -26,8 +26,8 @@ class Exam
     #[ORM\Column]
     private ?int $maxStudentEntry = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $cost = null;
+    #[ORM\Column]
+    private ?float $cost = null;
 
     /**
      * @var Collection<int, ExamStudent>
@@ -81,12 +81,12 @@ class Exam
         return $this;
     }
 
-    public function getCost(): ?string
+    public function getCost(): ?float
     {
         return $this->cost;
     }
 
-    public function setCost(string $cost): static
+    public function setCost(float $cost): static
     {
         $this->cost = $cost;
 

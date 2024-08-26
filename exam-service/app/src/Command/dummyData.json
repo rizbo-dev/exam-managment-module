@@ -1,0 +1,292 @@
+[
+  {
+    "id": 1,
+    "name": "Period 1",
+    "start_date": "2024-09-02",
+    "end_date": "2024-09-08",
+    "exams": [
+      {
+        "id": 1,
+        "courseId": 1,
+        "maxStudentEntry": 30,
+        "cost": 50.0
+      },
+      {
+        "id": 2,
+        "courseId": 2,
+        "maxStudentEntry": 25,
+        "cost": 45.0
+      },
+      {
+        "id": 3,
+        "courseId": 3,
+        "maxStudentEntry": 40,
+        "cost": 60.0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Period 2",
+    "start_date": "2024-09-09",
+    "end_date": "2024-09-15",
+    "exams": [
+      {
+        "id": 4,
+        "courseId": 4,
+        "maxStudentEntry": 35,
+        "cost": 55.0
+      },
+      {
+        "id": 5,
+        "courseId": 5,
+        "maxStudentEntry": 50,
+        "cost": 70.0
+      },
+      {
+        "id": 6,
+        "courseId": 6,
+        "maxStudentEntry": 20,
+        "cost": 40.0
+      },
+      {
+        "id": 7,
+        "courseId": 7,
+        "maxStudentEntry": 30,
+        "cost": 50.0
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Period 3",
+    "start_date": "2024-09-16",
+    "end_date": "2024-09-22",
+    "exams": [
+      {
+        "id": 8,
+        "courseId": 8,
+        "maxStudentEntry": 40,
+        "cost": 60.0
+      },
+      {
+        "id": 9,
+        "courseId": 9,
+        "maxStudentEntry": 25,
+        "cost": 45.0
+      },
+      {
+        "id": 10,
+        "courseId": 10,
+        "maxStudentEntry": 35,
+        "cost": 55.0
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Period 4",
+    "start_date": "2024-09-23",
+    "end_date": "2024-09-29",
+    "exams": [
+      {
+        "id": 11,
+        "courseId": 1,
+        "maxStudentEntry": 30,
+        "cost": 50.0
+      },
+      {
+        "id": 12,
+        "courseId": 2,
+        "maxStudentEntry": 45,
+        "cost": 65.0
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Period 5",
+    "start_date": "2024-09-30",
+    "end_date": "2024-10-06",
+    "exams": [
+      {
+        "id": 13,
+        "courseId": 3,
+        "maxStudentEntry": 50,
+        "cost": 70.0
+      },
+      {
+        "id": 14,
+        "courseId": 4,
+        "maxStudentEntry": 25,
+        "cost": 45.0
+      },
+      {
+        "id": 15,
+        "courseId": 5,
+        "maxStudentEntry": 35,
+        "cost": 55.0
+      },
+      {
+        "id": 16,
+        "courseId": 6,
+        "maxStudentEntry": 40,
+        "cost": 60.0
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Period 6",
+    "start_date": "2024-10-07",
+    "end_date": "2024-10-13",
+    "exams": [
+      {
+        "id": 17,
+        "courseId": 7,
+        "maxStudentEntry": 20,
+        "cost": 40.0
+      },
+      {
+        "id": 18,
+        "courseId": 8,
+        "maxStudentEntry": 30,
+        "cost": 50.0
+      },
+      {
+        "id": 19,
+        "courseId": 9,
+        "maxStudentEntry": 25,
+        "cost": 45.0
+      },
+      {
+        "id": 20,
+        "courseId": 10,
+        "maxStudentEntry": 35,
+        "cost": 55.0
+      },
+      {
+        "id": 21,
+        "courseId": 1,
+        "maxStudentEntry": 40,
+        "cost": 60.0
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Period 7",
+    "start_date": "2024-10-14",
+    "end_date": "2024-10-20",
+    "exams": [
+      {
+        "id": 22,
+        "courseId": 2,
+        "maxStudentEntry": 30,
+        "cost": 50.0
+      },
+      {
+        "id": 23,
+        "courseId": 3,
+        "maxStudentEntry": 25,
+        "cost": 45.0
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Period 8",
+    "start_date": "2024-10-21",
+    "end_date": "2024-10-27",
+    "exams": [
+      {
+        "id": 24,
+        "courseId": 4,
+        "maxStudentEntry": 35,
+        "cost": 55.0
+      },
+      {
+        "id": 25,
+        "courseId": 5,
+        "maxStudentEntry": 50,
+        "cost": 70.0
+      },
+      {
+        "id": 26,
+        "courseId": 6,
+        "maxStudentEntry": 20,
+        "cost": 40.0
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Period 9",
+    "start_date": "2024-10-28",
+    "end_date": "2024-11-03",
+    "exams": [
+      {
+        "id": 27,
+        "courseId": 7,
+        "maxStudentEntry": 30,
+        "cost": 50.0
+      },
+      {
+        "id": 28,
+        "courseId": 8,
+        "maxStudentEntry": 40,
+        "cost": 60.0
+      },
+      {
+        "id": 29,
+        "courseId": 9,
+        "maxStudentEntry": 25,
+        "cost": 45.0
+      },
+      {
+        "id": 30,
+        "courseId": 10,
+        "maxStudentEntry": 35,
+        "cost": 55.0
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Period 10",
+    "start_date": "2024-11-04",
+    "end_date": "2024-11-10",
+    "exams": [
+      {
+        "id": 31,
+        "courseId": 1,
+        "maxStudentEntry": 30,
+        "cost": 50.0
+      },
+      {
+        "id": 32,
+        "courseId": 2,
+        "maxStudentEntry": 45,
+        "cost": 65.0
+      },
+      {
+        "id": 33,
+        "courseId": 3,
+        "maxStudentEntry": 40,
+        "cost": 60.0
+      },
+      {
+        "id": 34,
+        "courseId": 4,
+        "maxStudentEntry": 35,
+        "cost": 55.0
+      },
+      {
+        "id": 35,
+        "courseId": 5,
+        "maxStudentEntry": 50,
+        "cost": 70.0
+      }
+    ]
+  }
+]

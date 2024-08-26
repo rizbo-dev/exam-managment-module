@@ -15,8 +15,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 readonly class UserClassVerificationMessageHandler
 {
     public function __construct(
-        private LoggerInterface $logger,
-        private MessageBusInterface $messageBus,
+        private LoggerInterface        $logger,
+        private MessageBusInterface    $messageBus,
         private EntityManagerInterface $entityManager
     )
     {
@@ -36,17 +36,16 @@ readonly class UserClassVerificationMessageHandler
                     'isValid' => false,
                     'message' => 'Student not found!'
                 ]);
+            $this->messageBus->dispatch($message);
             return;
         }
 
         $found = false;
 
         /** @var StudyProgram $item */
-        foreach ($student->getStudyProgram() as $item) {
-            foreach ($item->getCourses() as $course) {
-                if ($course->getId() === $classVerificationMessage->getCourseId()) {
-                    $found = true;
-                }
+        foreach ($student->getStudyProgram()->getCourses() as $course) {
+            if ($course->getId() === $classVerificationMessage->getCourseId()) {
+                $found = true;
             }
         }
 
@@ -59,6 +58,8 @@ readonly class UserClassVerificationMessageHandler
                     'isValid' => false,
                     'message' => 'Student is not assigned to course!'
                 ]);
+
+            $this->messageBus->dispatch($message);
             return;
         }
 

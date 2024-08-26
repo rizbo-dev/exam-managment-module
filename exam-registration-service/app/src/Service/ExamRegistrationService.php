@@ -24,7 +24,8 @@ readonly class ExamRegistrationService
 
         $examRegistration
             ->setStudentId($createExamRegistrationDto->getStudentId())
-            ->setExamId($createExamRegistrationDto->getExamId());
+            ->setExamId($createExamRegistrationDto->getExamId())
+            ->setCourseId($createExamRegistrationDto->getCourseId());
 
         $this->entityManager->persist($examRegistration);
         $this->initSagaItemsForExamRegistration($examRegistration);

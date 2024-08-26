@@ -24,8 +24,8 @@ class ExaminationPeriod
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $startDate = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $endDate = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $endDate = null;
 
     /**
      * @var Collection<int, Exam>
@@ -72,7 +72,7 @@ class ExaminationPeriod
         return $this->endDate;
     }
 
-    public function setEndDate(string $endDate): static
+    public function setEndDate(\DateTimeInterface $endDate): static
     {
         $this->endDate = $endDate;
 

@@ -22,24 +22,27 @@ readonly class UserWalletValidationResponseSagaItemResolver implements ResponseS
     {
         $payload = $responseSagaItemMessage->getPayload();
         $examRegistration = $this->entityManager->getRepository(ExamRegistration::class)->find($responseSagaItemMessage->getExamRegistrationId());
-        $userClassVerificationSagaItem = SagaItemService::getUserWalletValidationSagaItem($examRegistration);
+        $userWalletValidationSagaItem = SagaItemService::getUserWalletValidationSagaItem($examRegistration);
+        $userWalletValidationSagaItem
+            ->setStatus(SagaItem::FINISHED)
+            ->setFinishedAt(new \DateTimeImmutable())
+            ->setReturnedPayload($payload);
 
-        if ($payload['isValid']) {
-            $userClassVerificationSagaItem
-                ->setStatus(SagaItem::FINISHED)
-                ->setFinishedAt(new \DateTimeImmutable())
-                ->setReturnedPayload($payload);
+        $this->entityManager->flush();
 
+        if (!$payload['isValid']) {
+            SagaItemService::markSagaItemsAsCanceled($examRegistration);
             $this->entityManager->flush();
-
-            $nextSaga = SagaItemService::getNextItemForExecution($userClassVerificationSagaItem->getExamRegistration()->getSagaItems());
-
-            $this->sagaItemDispatcherService->dispatch($nextSaga);
+            return;
         }
-    }
 
+        $nextSaga = SagaItemService::getNextItemForExecution($userWalletValidationSagaItem->getExamRegistration()->getSagaItems());
+
+        $this->sagaItemDispatcherService->dispatch($nextSaga);
+    }
     public static function getResolverType(): string
     {
         return SagaItem::USER_WALLET_VALIDATION_SAGA_ITEM_TYPE;
     }
+
 }

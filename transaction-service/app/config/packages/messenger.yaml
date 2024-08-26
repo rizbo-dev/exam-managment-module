@@ -34,11 +34,21 @@ framework:
                     queues:
                         user-wallet-insert:
                             binding_keys: [ 'user-wallet-insert' ]
+            user_updated_transport:
+                serializer: messenger.transport.symfony_serializer
+                dsn: '%env(USER_UPDATED_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: student_update
+                        type: fanout
+                    queues:
+                        student_update_wallet: ~
 
         routing:
             'App\Message\UserWalletValidationMessage': user_wallet_validation_transport
             'App\Message\ResponseSagaItemMessage': response_saga_item_transport
             'App\Message\UserWalletInsertMessage': user_wallet_insert_transport
+            'App\Message\UserUpdatedMessage': user_updated_transport
 
 
 # when@test:

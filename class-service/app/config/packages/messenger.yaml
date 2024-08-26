@@ -29,12 +29,11 @@ framework:
                 dsn: '%env(USER_UPDATED_TRANSPORT_DSN)%'
                 options:
                     exchange:
-                        name: user-updated
-                        type: direct
-                        default_publish_routing_key: user-updated
+                        name: student_update
+                        type: fanout
                     queues:
-                        user-updated:
-                            binding_keys: [ 'user-updated' ]
+                        student_update_class: ~
+
 
         routing:
             'App\Message\UserClassVerificationMessage': user_class_verification_transport

@@ -10,12 +10,12 @@ framework:
                 options:
                     auto_setup: false
                     exchange:
-                        name: user-updated
-                        type: direct
-                        default_publish_routing_key: user-updated
+                        name: student_update
+                        type: fanout
                     queues:
-                        user-updated:
-                            binding_keys: [ 'user-updated' ]
+                        student_update_class: ~
+                        student_update_wallet: ~
+
 
         routing:
             'App\Message\UserUpdatedMessage': user_updated_transport

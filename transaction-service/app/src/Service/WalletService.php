@@ -17,5 +17,7 @@ class WalletService
                 $sum -= 0;
             }
         }
+
+        $wallet->setBalance($sum);
     }
 }

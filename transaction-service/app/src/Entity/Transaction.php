@@ -16,8 +16,8 @@ class Transaction
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $amount = null;
+    #[ORM\Column]
+    private ?float $amount = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
@@ -43,12 +43,12 @@ class Transaction
         return $this;
     }
 
-    public function getAmount(): ?string
+    public function getAmount(): ?float
     {
         return $this->amount;
     }
 
-    public function setAmount(string $amount): static
+    public function setAmount(float $amount): static
     {
         $this->amount = $amount;
 

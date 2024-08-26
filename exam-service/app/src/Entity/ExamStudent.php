@@ -6,6 +6,7 @@ use App\Repository\ExamStudentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ExamStudentRepository::class)]
+#[ORM\UniqueConstraint(name: "unique_exam_student", columns: ["exam_id", "student_id"])]
 class ExamStudent
 {
     #[ORM\Id]

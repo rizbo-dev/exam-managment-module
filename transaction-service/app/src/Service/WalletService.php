@@ -11,10 +11,10 @@ class WalletService
         $sum = 0;
         foreach ($wallet->getTransactions() as $transaction) {
             if ($transaction->getType() === 'income') {
-                $sum += 0;
+                $sum += $transaction->getAmount();
             }
             if ($transaction->getType() === 'outcome') {
-                $sum -= 0;
+                $sum -= $transaction->getAmount();
             }
         }
 

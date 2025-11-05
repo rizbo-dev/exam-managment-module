@@ -1,0 +1,228 @@
+version: '3.8'
+
+networks:
+  student-exam-management-network:
+
+services:
+  # MySQL Database
+  mysql8-service:
+    image: mysql:8
+    container_name: mysql8-container
+    ports:
+      - "5306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_PASSWORD: secret
+    networks:
+      - student-exam-management-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # RabbitMQ
+  rabbitmq-service:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq-container
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq/data/:/var/lib/rabbitmq/
+      - ./rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - student-exam-management-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Mailhog
+  mailhog-service:
+    image: mailhog/mailhog
+    container_name: mailhog-container
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - student-exam-management-network
+
+  # User Service (Go)
+  user-service-go:
+    build:
+      context: ./user-service-go
+      dockerfile: Dockerfile
+    container_name: user-service-go-container
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: mysql8-service
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: secret
+      DB_NAME: user_service
+      SERVER_PORT: 8080
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq-service:5672/
+    depends_on:
+      mysql8-service:
+        condition: service_healthy
+      rabbitmq-service:
+        condition: service_healthy
+    networks:
+      - student-exam-management-network
+    restart: unless-stopped
+
+  # Exam Service (Go)
+  exam-service-go:
+    build:
+      context: ./exam-service-go
+      dockerfile: Dockerfile
+    container_name: exam-service-go-container
+    ports:
+      - "8081:8081"
+    environment:
+      DB_HOST: mysql8-service
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: secret
+      DB_NAME: exam_service
+      SERVER_PORT: 8081
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq-service:5672/
+    depends_on:
+      mysql8-service:
+        condition: service_healthy
+      rabbitmq-service:
+        condition: service_healthy
+    networks:
+      - student-exam-management-network
+    restart: unless-stopped
+
+  # Class Service (Go)
+  class-service-go:
+    build:
+      context: ./class-service-go
+      dockerfile: Dockerfile
+    container_name: class-service-go-container
+    ports:
+      - "8082:8082"
+    environment:
+      DB_HOST: mysql8-service
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: secret
+      DB_NAME: class_service
+      SERVER_PORT: 8082
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq-service:5672/
+    depends_on:
+      mysql8-service:
+        condition: service_healthy
+      rabbitmq-service:
+        condition: service_healthy
+    networks:
+      - student-exam-management-network
+    restart: unless-stopped
+
+  # Transaction Service (Go)
+  transaction-service-go:
+    build:
+      context: ./transaction-service-go
+      dockerfile: Dockerfile
+    container_name: transaction-service-go-container
+    ports:
+      - "8083:8083"
+    environment:
+      DB_HOST: mysql8-service
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: secret
+      DB_NAME: transaction_service
+      SERVER_PORT: 8083
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq-service:5672/
+    depends_on:
+      mysql8-service:
+        condition: service_healthy
+      rabbitmq-service:
+        condition: service_healthy
+    networks:
+      - student-exam-management-network
+    restart: unless-stopped
+
+  # Email Service (Go)
+  email-service-go:
+    build:
+      context: ./email-service-go
+      dockerfile: Dockerfile
+    container_name: email-service-go-container
+    ports:
+      - "8084:8084"
+    environment:
+      SERVER_PORT: 8084
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq-service:5672/
+      SMTP_HOST: mailhog-service
+      SMTP_PORT: 1025
+    depends_on:
+      rabbitmq-service:
+        condition: service_healthy
+      mailhog-service:
+        condition: service_started
+    networks:
+      - student-exam-management-network
+    restart: unless-stopped
+
+  # Exam Registration Service (Go)
+  exam-registration-service-go:
+    build:
+      context: ./exam-registration-service-go
+      dockerfile: Dockerfile
+    container_name: exam-registration-service-go-container
+    ports:
+      - "8085:8085"
+    environment:
+      DB_HOST: mysql8-service
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: secret
+      DB_NAME: exam_registration_service
+      SERVER_PORT: 8085
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq-service:5672/
+    depends_on:
+      mysql8-service:
+        condition: service_healthy
+      rabbitmq-service:
+        condition: service_healthy
+    networks:
+      - student-exam-management-network
+    restart: unless-stopped
+
+  # Gateway Service (Go)
+  gateway-go:
+    build:
+      context: ./gateway-go
+      dockerfile: Dockerfile
+    container_name: gateway-go-container
+    ports:
+      - "8086:8086"
+    environment:
+      SERVER_PORT: 8086
+      USER_SERVICE_URL: http://user-service-go:8080
+      EXAM_SERVICE_URL: http://exam-service-go:8081
+      CLASS_SERVICE_URL: http://class-service-go:8082
+      TRANSACTION_SERVICE_URL: http://transaction-service-go:8083
+      EMAIL_SERVICE_URL: http://email-service-go:8084
+      EXAM_REGISTRATION_SERVICE_URL: http://exam-registration-service-go:8085
+    depends_on:
+      - user-service-go
+      - exam-service-go
+      - class-service-go
+      - transaction-service-go
+      - email-service-go
+      - exam-registration-service-go
+    networks:
+      - student-exam-management-network
+    restart: unless-stopped
